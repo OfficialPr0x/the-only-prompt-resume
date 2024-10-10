@@ -1,0 +1,1155 @@
+<html><head><base href="https://resumebuilder.example.com/" target="_blank"><title>Professional Resume Builder</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+  @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+  :root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --background-color: #f0f2f5;
+    --sidebar-color: #34495e;
+    --text-color: #2c3e50;
+    --text-light: #ecf0f1;
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+
+  .container {
+    display: flex;
+    height: 100%;
+  }
+
+  .sidebar {
+    width: 250px;
+    background-color: var(--sidebar-color);
+    color: var(--text-light);
+    transition: var(--transition);
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .sidebar-logo {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+
+  .sidebar-nav {
+    flex-grow: 1;
+    padding: 20px 0;
+  }
+
+  .nav-item {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .nav-item:hover {
+    background-color: rgba(255,255,255,0.1);
+  }
+
+  .nav-item i {
+    margin-right: 15px;
+    font-size: 1.2em;
+    width: 20px;
+    text-align: center;
+  }
+
+  .nav-item span {
+    font-size: 0.9em;
+  }
+
+  .sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .button {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+  }
+
+  .button i {
+    margin-right: 8px;
+  }
+
+  .button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .resume-preview {
+    background-color: white;
+    flex-grow: 1;
+    border-radius: var(--border-radius);
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: auto;
+    position: relative;
+  }
+
+  .resume-content {
+    display: flex;
+    color: var(--text-color);
+  }
+
+  .resume-sidebar {
+    width: 30%;
+    padding-right: 20px;
+  }
+
+  .resume-main {
+    width: 70%;
+  }
+
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #bdc3c7;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+  }
+
+  h1, h2, h3 {
+    margin: 0 0 15px 0;
+  }
+
+  .section {
+    margin-bottom: 25px;
+  }
+
+  .contact-info {
+    background-color: var(--secondary-color);
+    color: var(--text-light);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .skill-tag {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+  }
+
+  .editable {
+    outline: none;
+    border: 1px dashed transparent;
+    transition: var(--transition);
+    padding: 5px;
+    border-radius: 4px;
+  }
+
+  .editable:hover {
+    border-color: var(--primary-color);
+  }
+
+  .editable:focus {
+    border-color: var(--primary-color);
+    background-color: rgba(52, 152, 219, 0.1);
+  }
+
+  .tool-panel {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .tool-panel h3 {
+    margin-top: 0;
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .tool-button {
+    padding: 10px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+
+  .tool-button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+  }
+
+  .tool-button i {
+    margin-right: 10px;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  .modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    width: 50%;
+    max-width: 500px;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  @media (max-width: 1024px) {
+    .sidebar {
+      width: 70px;
+    }
+    .sidebar-logo, .nav-item span, .sidebar-footer {
+      display: none;
+    }
+    .nav-item {
+      justify-content: center;
+    }
+    .nav-item i {
+      margin-right: 0;
+      font-size: 1.5em;
+    }
+    .main-content {
+      padding-left: 90px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+    .sidebar {
+      width: 100%;
+      height: auto;
+    }
+    .sidebar-nav {
+      display: flex;
+      justify-content: space-around;
+    }
+    .nav-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .nav-item i {
+      margin-right: 0;
+      margin-bottom: 5px;
+    }
+    .nav-item span {
+      display: block;
+      font-size: 0.8em;
+    }
+    .main-content {
+      padding-left: 20px;
+    }
+    .resume-content {
+      flex-direction: column;
+    }
+    .resume-sidebar, .resume-main {
+      width: 100%;
+    }
+    .controls {
+      justify-content: center;
+    }
+    .modal-content {
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .button {
+      padding: 8px 12px;
+      font-size: 0.9em;
+    }
+    .button i {
+      margin-right: 5px;
+    }
+  }
+
+  .component-library {
+    padding: 20px;
+    display: none;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .component-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .component {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    cursor: move;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .component i {
+    font-size: 1.2em;
+  }
+
+  .dropzone {
+    border: 2px dashed var(--primary-color);
+    background-color: rgba(52, 152, 219, 0.1);
+    min-height: 50px;
+    margin: 10px 0;
+  }
+
+  .project-list, .template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .project-item, .template-item {
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+  }
+
+  .project-item:hover, .template-item:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .template-item img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+  }
+
+  .ai-chat-interface {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+  }
+
+  #chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+  }
+
+  .chat-input {
+    display: flex;
+    margin-top: 10px;
+  }
+
+  .chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+  }
+
+  .chat-input button {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  }
+
+  .setting-group {
+    margin-bottom: 15px;
+  }
+
+  .setting-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .setting-group select, .setting-group input {
+    width: 100%;
+    padding: 5px;
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+  }
+
+  .resume-preview.drag-over {
+    border: 2px dashed var(--primary-color);
+    background-color: rgba(52, 152, 219, 0.1);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .portfolio-item {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+  }
+
+  blockquote {
+    font-style: italic;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 10px;
+    margin-left: 0;
+  }
+
+  .accomplishments ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .accomplishments li:before {
+    content: "✓ ";
+    color: var(--primary-color);
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">ProResume</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item" id="dashboard-nav">
+        <i class="fas fa-home"></i>
+        <span>Dashboard</span>
+      </div>
+      <div class="nav-item" id="templates-nav">
+        <i class="fas fa-palette"></i>
+        <span>Templates</span>
+      </div>
+      <div class="nav-item" id="ai-assist-nav">
+        <i class="fas fa-robot"></i>
+        <span>AI Assist</span>
+      </div>
+      <div class="nav-item" id="settings-nav">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </div>
+      <div class="nav-item" id="components-nav">
+        <i class="fas fa-puzzle-piece"></i>
+        <span>Components</span>
+      </div>
+    </nav>
+    <div class="component-library">
+      <h3>Resume Components</h3>
+      <div class="component-list">
+        <div class="component" draggable="true" data-component="work-experience">
+          <i class="fas fa-briefcase"></i>
+          <span>Work Experience</span>
+        </div>
+        <div class="component" draggable="true" data-component="education">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Education</span>
+        </div>
+        <div class="component" draggable="true" data-component="skills">
+          <i class="fas fa-cogs"></i>
+          <span>Skills</span>
+        </div>
+        <div class="component" draggable="true" data-component="projects">
+          <i class="fas fa-project-diagram"></i>
+          <span>Projects</span>
+        </div>
+        <div class="component" draggable="true" data-component="accomplishments">
+          <i class="fas fa-trophy"></i>
+          <span>Key Accomplishments</span>
+        </div>
+        <div class="component" draggable="true" data-component="personal-brand">
+          <i class="fas fa-fingerprint"></i>
+          <span>Personal Brand Statement</span>
+        </div>
+        <div class="component" draggable="true" data-component="testimonials">
+          <i class="fas fa-quote-right"></i>
+          <span>Testimonials</span>
+        </div>
+        <div class="component" draggable="true" data-component="portfolio">
+          <i class="fas fa-images"></i>
+          <span>Visual Portfolio</span>
+        </div>
+        <div class="component" draggable="true" data-component="volunteer">
+          <i class="fas fa-hands-helping"></i>
+          <span>Volunteer Experience</span>
+        </div>
+        <div class="component" draggable="true" data-component="publications">
+          <i class="fas fa-book"></i>
+          <span>Publications</span>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <span>© 2023 ProResume</span>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="header">
+      <div class="controls">
+        <button class="button" id="layout-btn"><i class="fas fa-columns"></i> Layout</button>
+        <button class="button" id="fonts-btn"><i class="fas fa-font"></i> Fonts</button>
+        <button class="button" id="themes-btn"><i class="fas fa-paint-brush"></i> Themes</button>
+        <button class="button" id="format-btn"><i class="fas fa-align-left"></i> Format</button>
+        <button class="button" id="download-btn"><i class="fas fa-download"></i> Download</button>
+      </div>
+    </div>
+    <div class="tool-panel">
+      <h3>Resume Building Tools</h3>
+      <div class="tool-grid">
+        <button class="tool-button" id="skill-suggester"><i class="fas fa-lightbulb"></i> Skill Suggester</button>
+        <button class="tool-button" id="job-description-analyzer"><i class="fas fa-search"></i> Job Description Analyzer</button>
+        <button class="tool-button" id="action-verb-finder"><i class="fas fa-bolt"></i> Action Verb Finder</button>
+        <button class="tool-button" id="achievement-formatter"><i class="fas fa-trophy"></i> Achievement Formatter</button>
+        <button class="tool-button" id="grammar-checker"><i class="fas fa-spell-check"></i> Grammar Checker</button>
+        <button class="tool-button" id="keyword-optimizer"><i class="fas fa-key"></i> Keyword Optimizer</button>
+      </div>
+    </div>
+    <div class="resume-preview">
+      <div class="resume-content">
+        <div class="resume-sidebar">
+          <div class="profile-pic" id="profile-pic"></div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">SKILLS</h2>
+            <div id="skills-container">
+              <span class="skill-tag editable" contenteditable="true">Skill 1</span>
+              <span class="skill-tag editable" contenteditable="true">Skill 2</span>
+              <span class="skill-tag editable" contenteditable="true">Skill 3</span>
+            </div>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">LANGUAGES</h2>
+            <p class="editable" contenteditable="true">English<br>Native Proficiency</p>
+            <p class="editable" contenteditable="true">Spanish<br>Professional Working Proficiency</p>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">INTERESTS</h2>
+            <p class="editable" contenteditable="true">Reading, Hiking, Photography</p>
+          </div>
+        </div>
+        <div class="resume-main">
+          <h1 class="editable" contenteditable="true">Your Name</h1>
+          <p class="editable" contenteditable="true">Professional Title</p>
+          <p class="editable" contenteditable="true">Short and engaging pitch about yourself. Highlight your key strengths and what makes you unique.</p>
+          <div class="contact-info">
+            <span class="editable" contenteditable="true"><i class="fas fa-envelope"></i> email@example.com</span>
+            <span class="editable" contenteditable="true"><i class="fas fa-phone"></i> (123) 456-7890</span>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">WORK EXPERIENCE</h2>
+            <h3 class="editable" contenteditable="true">Job Title</h3>
+            <p class="editable" contenteditable="true">Company Name | Start Date - End Date</p>
+            <ul>
+              <li class="editable" contenteditable="true">Key achievement or responsibility</li>
+              <li class="editable" contenteditable="true">Key achievement or responsibility</li>
+              <li class="editable" contenteditable="true">Key achievement or responsibility</li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">EDUCATION</h2>
+            <h3 class="editable" contenteditable="true">Degree Name</h3>
+            <p class="editable" contenteditable="true">University Name | Graduation Year</p>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">CERTIFICATIONS</h2>
+            <p class="editable" contenteditable="true">Certification Name</p>
+            <p class="editable" contenteditable="true">Certification Name</p>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">KEY ACCOMPLISHMENTS</h2>
+            <ul>
+              <li class="editable" contenteditable="true">Achieved [specific result] by implementing [action taken]</li>
+              <li class="editable" contenteditable="true">Recognized for [achievement] which led to [positive outcome]</li>
+              <li class="editable" contenteditable="true">Spearheaded initiative that resulted in [measurable impact]</li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">PERSONAL BRAND STATEMENT</h2>
+            <p class="editable" contenteditable="true">Innovative [your profession] with a passion for [key strength]. Known for [unique trait] and ability to [key skill]. Committed to [your goal or mission].</p>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">TESTIMONIALS</h2>
+            <blockquote class="editable" contenteditable="true">"[Your name] is an exceptional [profession] who consistently [positive trait]." - [Name], [Position]</blockquote>
+            <blockquote class="editable" contenteditable="true">"Working with [Your name] was a game-changer for our team. Their [skill] significantly [positive outcome]." - [Name], [Position]</blockquote>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">VISUAL PORTFOLIO</h2>
+            <div class="portfolio-grid">
+              <div class="portfolio-item editable" contenteditable="true">[Project Name]</div>
+              <div class="portfolio-item editable" contenteditable="true">[Project Name]</div>
+              <div class="portfolio-item editable" contenteditable="true">[Project Name]</div>
+            </div>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">VOLUNTEER EXPERIENCE</h2>
+            <h3 class="editable" contenteditable="true">Role at Organization</h3>
+            <p class="editable" contenteditable="true">Organization Name | Duration</p>
+            <ul>
+              <li class="editable" contenteditable="true">Key contribution or responsibility</li>
+              <li class="editable" contenteditable="true">Impact made or skill developed</li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2 class="editable" contenteditable="true">PUBLICATIONS</h2>
+            <p class="editable" contenteditable="true">[Author(s)]. (Year). [Title of the article]. [Journal Name], [Volume](Issue), [Page range]. [DOI or URL]</p>
+            <p class="editable" contenteditable="true">[Author(s)]. (Year). [Title of the article]. [Journal Name], [Volume](Issue), [Page range]. [DOI or URL]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 id="modal-title"></h2>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalBody = document.getElementById('modal-body');
+  const closeModal = document.getElementsByClassName('close')[0];
+
+  function showModal(title, content) {
+    modalTitle.textContent = title;
+    modalBody.innerHTML = content;
+    modal.style.display = 'block';
+  }
+
+  closeModal.onclick = function() {
+    modal.style.display = 'none';
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+  // Profile picture upload
+  const profilePic = document.getElementById('profile-pic');
+  profilePic.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        profilePic.style.backgroundImage = `url('${event.target.result}')`;
+        profilePic.style.backgroundSize = 'cover';
+        profilePic.style.backgroundPosition = 'center';
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  });
+
+  // Skills management
+  const skillsContainer = document.getElementById('skills-container');
+  skillsContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('skill-tag')) {
+      e.target.focus();
+    }
+  });
+
+  skillsContainer.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newSkill = document.createElement('span');
+      newSkill.className = 'skill-tag editable';
+      newSkill.contentEditable = true;
+      newSkill.textContent = 'New Skill';
+      skillsContainer.appendChild(newSkill);
+      newSkill.focus();
+    }
+  });
+
+  // Make resume components draggable
+  document.querySelectorAll('.component').forEach(component => {
+    component.addEventListener('dragstart', dragStart);
+  });
+
+  // Add drop zone to resume preview
+  const resumePreview = document.querySelector('.resume-preview');
+  resumePreview.addEventListener('dragover', dragOver);
+  resumePreview.addEventListener('drop', drop);
+  
+  function dragStart(e) {
+    e.dataTransfer.setData('text/plain', e.target.dataset.component);
+  }
+
+  function dragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    e.currentTarget.classList.add('drag-over');
+  }
+
+  function drop(e) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+    const componentType = e.dataTransfer.getData('text');
+    const newComponent = createComponent(componentType);
+
+    // Insert the new component at the drop position
+    const dropPosition = document.elementFromPoint(e.clientX, e.clientY);
+    if (resumePreview.contains(dropPosition)) {
+      if (dropPosition === resumePreview) {
+        resumePreview.appendChild(newComponent);
+      } else {
+        dropPosition.parentNode.insertBefore(newComponent, dropPosition.nextSibling);
+      }
+    }
+  }
+
+  function createComponent(type) {
+    const component = document.createElement('div');
+    component.className = 'section';
+    let content = '';
+    
+    switch(type) {
+      case 'work-experience':
+        content = `
+          <h2 class="editable" contenteditable="true">WORK EXPERIENCE</h2>
+          <h3 class="editable" contenteditable="true">Job Title</h3>
+          <p class="editable" contenteditable="true">Company Name | Start Date - End Date</p>
+          <ul>
+            <li class="editable" contenteditable="true">Key achievement or responsibility</li>
+            <li class="editable" contenteditable="true">Key achievement or responsibility</li>
+          </ul>
+        `;
+        break;
+      case 'education':
+        content = `
+          <h2 class="editable" contenteditable="true">EDUCATION</h2>
+          <h3 class="editable" contenteditable="true">Degree Name</h3>
+          <p class="editable" contenteditable="true">University Name | Graduation Year</p>
+        `;
+        break;
+      case 'skills':
+        content = `
+          <h2 class="editable" contenteditable="true">SKILLS</h2>
+          <div class="skills-container">
+            <span class="skill-tag editable" contenteditable="true">Skill 1</span>
+            <span class="skill-tag editable" contenteditable="true">Skill 2</span>
+            <span class="skill-tag editable" contenteditable="true">Skill 3</span>
+          </div>
+        `;
+        break;
+      case 'projects':
+        content = `
+          <h2 class="editable" contenteditable="true">PROJECTS</h2>
+          <h3 class="editable" contenteditable="true">Project Name</h3>
+          <p class="editable" contenteditable="true">Brief project description</p>
+          <ul>
+            <li class="editable" contenteditable="true">Key feature or achievement</li>
+            <li class="editable" contenteditable="true">Key feature or achievement</li>
+          </ul>
+        `;
+        break;
+      case 'accomplishments':
+        content = `
+          <h2 class="editable" contenteditable="true">KEY ACCOMPLISHMENTS</h2>
+          <ul>
+            <li class="editable" contenteditable="true">Achieved [specific result] by implementing [action taken]</li>
+            <li class="editable" contenteditable="true">Recognized for [achievement] which led to [positive outcome]</li>
+            <li class="editable" contenteditable="true">Spearheaded initiative that resulted in [measurable impact]</li>
+          </ul>
+        `;
+        break;
+      case 'personal-brand':
+        content = `
+          <h2 class="editable" contenteditable="true">PERSONAL BRAND STATEMENT</h2>
+          <p class="editable" contenteditable="true">Innovative [your profession] with a passion for [key strength]. Known for [unique trait] and ability to [key skill]. Committed to [your goal or mission].</p>
+        `;
+        break;
+      case 'testimonials':
+        content = `
+          <h2 class="editable" contenteditable="true">TESTIMONIALS</h2>
+          <blockquote class="editable" contenteditable="true">"[Your name] is an exceptional [profession] who consistently [positive trait]." - [Name], [Position]</blockquote>
+          <blockquote class="editable" contenteditable="true">"Working with [Your name] was a game-changer for our team. Their [skill] significantly [positive outcome]." - [Name], [Position]</blockquote>
+        `;
+        break;
+      case 'portfolio':
+        content = `
+          <h2 class="editable" contenteditable="true">VISUAL PORTFOLIO</h2>
+          <div class="portfolio-grid">
+            <div class="portfolio-item editable" contenteditable="true">[Project Name]</div>
+            <div class="portfolio-item editable" contenteditable="true">[Project Name]</div>
+            <div class="portfolio-item editable" contenteditable="true">[Project Name]</div>
+          </div>
+        `;
+        break;
+      case 'volunteer':
+        content = `
+          <h2 class="editable" contenteditable="true">VOLUNTEER EXPERIENCE</h2>
+          <h3 class="editable" contenteditable="true">Role at Organization</h3>
+          <p class="editable" contenteditable="true">Organization Name | Duration</p>
+          <ul>
+            <li class="editable" contenteditable="true">Key contribution or responsibility</li>
+            <li class="editable" contenteditable="true">Impact made or skill developed</li>
+          </ul>
+        `;
+        break;
+      case 'publications':
+        content = `
+          <h2 class="editable" contenteditable="true">PUBLICATIONS</h2>
+          <p class="editable" contenteditable="true">[Author(s)]. (Year). [Title of the article]. [Journal Name], [Volume](Issue), [Page range]. [DOI or URL]</p>
+          <p class="editable" contenteditable="true">[Author(s)]. (Year). [Title of the article]. [Journal Name], [Volume](Issue), [Page range]. [DOI or URL]</p>
+        `;
+        break;
+    }
+    
+    component.innerHTML = content;
+    return component;
+  }
+
+  // Show/hide component library
+  const componentsNav = document.getElementById('components-nav');
+  const componentLibrary = document.querySelector('.component-library');
+  componentsNav.addEventListener('click', () => {
+    componentLibrary.style.display = componentLibrary.style.display === 'none' ? 'block' : 'none';
+  });
+
+  // Sidebar navigation
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const itemId = item.id;
+      switch(itemId) {
+        case 'dashboard-nav':
+          showDashboardModal();
+          break;
+        case 'templates-nav':
+          showTemplatesModal();
+          break;
+        case 'ai-assist-nav':
+          showAIAssistModal();
+          break;
+        case 'settings-nav':
+          showSettingsModal();
+          break;
+        case 'components-nav':
+          componentLibrary.style.display = componentLibrary.style.display === 'none' ? 'block' : 'none';
+          break;
+      }
+    });
+  });
+
+  function showDashboardModal() {
+    showModal('Dashboard', `
+      <h3>Saved Projects</h3>
+      <div class="project-list">
+        <div class="project-item" data-project="resume1">
+          <i class="fas fa-file-alt"></i>
+          <span>Resume 1</span>
+        </div>
+        <div class="project-item" data-project="resume2">
+          <i class="fas fa-file-alt"></i>
+          <span>Resume 2</span>
+        </div>
+        <div class="project-item" data-project="resume3">
+          <i class="fas fa-file-alt"></i>
+          <span>Resume 3</span>
+        </div>
+      </div>
+    `);
+  }
+
+  function showTemplatesModal() {
+    showModal('Templates', `
+      <div class="template-grid">
+        <div class="template-item" data-template="classic">
+          <img src="classic-template.jpg" alt="Classic Template">
+          <span>Classic</span>
+        </div>
+        <div class="template-item" data-template="modern">
+          <img src="modern-template.jpg" alt="Modern Template">
+          <span>Modern</span>
+        </div>
+        <div class="template-item" data-template="creative">
+          <img src="creative-template.jpg" alt="Creative Template">
+          <span>Creative</span>
+        </div>
+        <div class="template-item" data-template="professional">
+          <img src="professional-template.jpg" alt="Professional Template">
+          <span>Professional</span>
+        </div>
+        <div class="template-item" data-template="executive">
+          <img src="executive-template.jpg" alt="Executive Template">
+          <span>Executive</span>
+        </div>
+        <div class="template-item" data-template="minimal">
+          <img src="minimal-template.jpg" alt="Minimal Template">
+          <span>Minimal</span>
+        </div>
+      </div>
+    `);
+  }
+
+  function showAIAssistModal() {
+    showModal('AI Assist', `
+      <div class="ai-chat-interface">
+        <div id="chat-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="user-input" placeholder="Ask AI for resume advice...">
+          <button id="send-message" class="button">Send</button>
+        </div>
+      </div>
+    `);
+  }
+
+  function showSettingsModal() {
+    showModal('Settings', `
+      <h3>App Settings</h3>
+      <div class="setting-group">
+        <label for="app-theme">App Theme:</label>
+        <select id="app-theme">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="setting-group">
+        <label for="accent-color">Accent Color:</label>
+        <input type="color" id="accent-color" value="#3498db">
+      </div>
+      <h3>AI Settings</h3>
+      <div class="setting-group">
+        <label for="ai-model">AI Model:</label>
+        <select id="ai-model">
+          <option value="gpt-3.5">GPT-3.5</option>
+          <option value="gpt-4">GPT-4</option>
+        </select>
+      </div>
+      <div class="setting-group">
+        <label for="api-key">API Key:</label>
+        <input type="password" id="api-key" placeholder="Enter your API key">
+      </div>
+      <button id="save-settings" class="button">Save Settings</button>
+    `);
+  }
+
+  document.body.addEventListener('click', (e) => {
+    if (e.target.closest('.project-item')) {
+      const projectId = e.target.closest('.project-item').dataset.project;
+      console.log(`Loading project: ${projectId}`);
+      modal.style.display = 'none';
+    }
+
+    if (e.target.closest('.template-item')) {
+      const templateId = e.target.closest('.template-item').dataset.template;
+      console.log(`Loading template: ${templateId}`);
+      modal.style.display = 'none';
+    }
+
+    if (e.target.id === 'send-message') {
+      const userInput = document.getElementById('user-input').value;
+      if (userInput.trim() !== '') {
+        sendMessageToAI(userInput);
+      }
+    }
+
+    if (e.target.id === 'save-settings') {
+      saveSettings();
+    }
+  });
+
+  document.getElementById('download-btn').addEventListener('click', () => {
+    showModal('Download Resume', `
+      <h3>Choose File Format</h3>
+      <button id="download-pdf" class="button">PDF</button>
+      <button id="download-docx" class="button">DOCX</button>
+      <button id="download-txt" class="button">TXT</button>
+    `);
+  });
+
+  document.body.addEventListener('click', (e) => {
+    if (e.target.id === 'download-pdf') {
+      downloadResume('pdf');
+    } else if (e.target.id === 'download-docx') {
+      downloadResume('docx');
+    } else if (e.target.id === 'download-txt') {
+      downloadResume('txt');
+    }
+  });
+
+  function downloadResume(format) {
+    const resumeContent = document.querySelector('.resume-preview').cloneNode(true);
+    
+    // Remove editable classes and contenteditable attributes
+    resumeContent.querySelectorAll('.editable').forEach(el => {
+      el.classList.remove('editable');
+      el.removeAttribute('contenteditable');
+    });
+
+    if (format === 'pdf') {
+      html2pdf().from(resumeContent).save('resume.pdf');
+    } else if (format === 'docx') {
+      console.log('DOCX download not implemented');
+    } else if (format === 'txt') {
+      const plainText = resumeContent.innerText;
+      const blob = new Blob([plainText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'resume.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  function sendMessageToAI(message) {
+    const chatMessages = document.getElementById('chat-messages');
+    chatMessages.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+    chatMessages.innerHTML += `<p><strong>AI:</strong> Thank you for your message. I'm here to help with your resume.</p>`;
+    document.getElementById('user-input').value = '';
+  }
+
+  function saveSettings() {
+    const theme = document.getElementById('app-theme').value;
+    const accentColor = document.getElementById('accent-color').value;
+    const aiModel = document.getElementById('ai-model').value;
+    const apiKey = document.getElementById('api-key').value;
+    
+    console.log('Saving settings:', { theme, accentColor, aiModel, apiKey });
+    modal.style.display = 'none';
+  }
+
+  // Resume building tools
+  document.getElementById('skill-suggester').addEventListener('click', () => {
+    showModal('Skill Suggester', `
+      <p>Based on your resume content, we suggest adding these skills:</p>
+      <ul>
+        <li>Project Management</li>
+        <li>Data Analysis</li>
+        <li>Content Strategy</li>
+      </ul>
+      <button id="add-suggested-skills" class="button">Add Selected Skills</button>
+    `);
+  });
+
+  document.getElementById('job-description-analyzer').addEventListener('click', () => {
+    showModal('Job Description Analyzer', `
+      <textarea id="job-description" rows="5" placeholder="Paste job description here"></textarea>
+      <button id="analyze-job" class="button">Analyze</button>
+      <div id="analysis-result"></div>
+    `);
+  });
+
+  document.getElementById('action-verb-finder').addEventListener('click', () => {
+    showModal('Action Verb Finder', `
+      <input type="text" id="verb-search" placeholder="Search for action verbs">
+      <div id="verb-suggestions"></div>
+    `);
+  });
+
+  document.getElementById('achievement-formatter').addEventListener('click', () => {
+    showModal('Achievement Formatter', `
+      <input type="text" id="achievement-input" placeholder="Describe your achievement">
+      <button id="format-achievement" class="button">Format</button>
+    `);
+  });
+});
+</script>
+</body>
+</html>
